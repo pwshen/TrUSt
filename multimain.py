@@ -16,9 +16,6 @@ from model.capenc import ClassificationTask as capenc
 from model.capenc import TextEnc as capte
 
 from transformers import *
-losssm_w = 10
-losscls_w = 0.01
-freeze = False
 
 
 def check_param(model):
@@ -55,7 +52,7 @@ def train_epoch(opt, trn_dset, val_dset, tst_dset, smtask, clstask, optimizer, c
             losssm = torch.sum(1. - criterionsm(gen_cap, tru_cap.detach()), -1)
             losscls = criterioncls(outputs, labels)
 
-            loss = losscls*losscls_w + losssm*losssm_w
+            loss = losscls * opt.losscls_w + losssm * opt.losssm_w
 
             optimizer.zero_grad()
             loss.backward()
@@ -134,7 +131,7 @@ def validate(smtask, clstask, valid_loader, criterionsm, criterioncls, criterion
 
             valid_sm = torch.sum(1. - criterionsm(gen_cap, tru_cap.detach()), -1)
             valid_cls = criterioncls(outputs, labels)
-            loss = valid_cls*losscls_w + valid_sm*losssm_w
+            loss = valid_cls * opt.losscls_w + valid_sm * opt.losssm_w
 
             # loss, valid_cls, valid_sm = criterion(gen_cap, tru_cap, outputs, labels)
 

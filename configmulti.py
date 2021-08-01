@@ -55,6 +55,8 @@ def get_argparse():
     parser.add_argument("--cnn_feat", type=str, default="")
     parser.add_argument("--s3d_feat", type=str, default="")
     parser.add_argument("--sn_feat", type=str, default="")
+    parser.add_argument("--losssm_w", type=float, default="10", help="weight of the multi-task loss")
+    parser.add_argument("--losscls_w", type=float, default="0.01", help="weight of the classification task loss")
     
     
     parser.add_argument("--disable_attn_fusion", action='store_true')
