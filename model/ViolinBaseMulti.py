@@ -293,7 +293,7 @@ class ClassificationTask(nn.Module):
                 nn.Linear(hsize2, n_labels)
             )
         else:
-            self.final_fc = nn.Linear(hsize2*2*(final_multi-1), n_labels)
+            self.final_fc = nn.Linear(hsize2*2*(final_multi), n_labels)
             
     
     def max_along_time(self, outputs, lengths):
