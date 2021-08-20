@@ -26,4 +26,4 @@ A multi-stream multi-task model, each stream process different contextual inputs
    Run generate_sh.py  
    ``` python generate_sh.py ```
 5. Training  
-   ``` sh exp{} ```
+   ``` sh {experiment file want to run} ```
