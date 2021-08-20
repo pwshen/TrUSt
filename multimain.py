@@ -9,9 +9,9 @@ import torch.nn as nn
 import torch.backends.cudnn as cudnn
 from torch.utils.data import DataLoader
 
-from violin_dataset import ViolinDataset, pad_collate, preprocess_batch
+from truman_dataset import TrumanDataset, pad_collate, preprocess_batch
 from configmulti import get_argparse
-from model.ViolinBaseMulti import VideoEnc, AudioEnc, TextEnc, ObjectEnc, SimilarityTask, ClassificationTask, MultiTaskLoss
+from model.trust import VideoEnc, AudioEnc, TextEnc, ObjectEnc, SimilarityTask, ClassificationTask, MultiTaskLoss
 from model.capenc import ClassificationTask as capenc
 from model.capenc import TextEnc as capte
 
