@@ -16,7 +16,7 @@ def get_argparse():
     #parser.add_argument("--log_freq", type=int, default=10, help="print, save training info")
     parser.add_argument("--lr", type=float, default=5e-5, help="learning rate")
     parser.add_argument("--wd", type=float, default=5e-6, help="weight decay")
-    parser.add_argument("--n_epoch", type=int, default=100, help="number of epochs to run")
+    parser.add_argument("--n_epoch", type=int, default=50, help="number of epochs to run")
     parser.add_argument("--losssm_w", type=float, default=10, help="number of epochs to run")
     parser.add_argument("--losscls_w", type=float, default=0.01, help="number of epochs to run")
     #parser.add_argument("--grad_clip", type=float, default=0.01, help="gradient clip value")
