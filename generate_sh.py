@@ -1,4 +1,4 @@
-cmd_template = "python3 main.py --feat_dir ./data --bert_dir ./data/bert/ --vcpt_dir ./data/tvtrope_vcpts/ --cnn_feat ./data/TVtrope_resnet101.hdf5 --s3d_feat ./data/truman_s3d.h5 --sn_feat ./data/TVtrope_soundnet.hdf5 {} {} {} {} {}"
+cmd_template = "python3 multimain.py --feat_dir ./data --bert_dir ./data/bert/ --vcpt_dir ./data/tvtrope_vcpts/ --cnn_feat ./data/TVtrope_resnet101.hdf5 --s3d_feat ./data/truman_s3d.h5 --sn_feat ./data/TVtrope_soundnet.hdf5 {} {} {} {} {}"
 
 opts = [
     ['vid sub cap', 's3d', 'sub', '', ''],
