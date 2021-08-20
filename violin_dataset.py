@@ -39,7 +39,7 @@ def clean_str(string):
     string = re.sub(r"\s{2,}", " ", string)
     return string.strip()
 
-class ViolinDataset(Dataset):
+class TrumanDataset(Dataset):
     def __init__(self, opt, bert_tokenizer, mode='train'):
         print('='*20)
         super(ViolinDataset, self).__init__()
@@ -54,12 +54,6 @@ class ViolinDataset(Dataset):
         self.no_normalize_v = opt.no_normalize_v
         self.trope2idx = json.load(open(os.path.join(opt.feat_dir, 'trope2idx.json'),'r'))
         
-        # entire_clip_info = json.load(open(os.path.join(opt.feat_dir, 'violin_annotation.json'),'r'))
-        # self.clip_info = []
-        
-        # for clip_id, clip in entire_clip_info.items():
-        #     if clip['split'] == self.mode or self.mode == 'all':
-        #         self.clip_info.append(clip)
         trope_file = json.load(open(os.path.join(opt.feat_dir, opt.trope_file),'r'))
         if self.mode == 'train':
             self.clip_info = trope_file['train']
@@ -70,58 +64,23 @@ class ViolinDataset(Dataset):
 
         # print('dataset mode', self.mode, '\tdata size', len(self.clip_info))
         self.clip_set = set([c['data-video-name'][:-4] for c in self.clip_info])
-        # removed problem video
-        # r_list = ['436.mp4', '1559.mp4', '5367.mp4', '9285.mp4', '11843.mp4', '22700.mp4'] 
-        # r_list += ['17115.mp4', '1848.mp4', '26698.mp4', '33266.mp4', '33316.mp4', '26694.mp4']
-        #r_list_h5 = set([i.split(".")[0] for i in r_list])
-        
-        # for clip in self.clip_info:
-        #     if clip['data-video-name'] in r_list:
-        #         self.clip_info.remove(clip)
-        # for r in r_list:
-        #     if r in self.clip_set:
-        #         self.clip_set.remove(r)
-        # assert len(clip_set) == len(self.clip_info)
 
         if 'vid' in self.input_streams:
             assert opt.cnn_feat or opt.c3d_feat
             print('loading video {} features'.format(opt.visual_feat))
-            #with h5py.File(os.path.join(opt.feat_dir, 'TVtrope_resnet101.hdf5' if opt.feat=='resnet' else 'all_c3d_fc6_features.h5'), 'r') as fin:
             if opt.cnn_feat and opt.visual_feat in ['cnn', 'both']:
                 with h5py.File(opt.cnn_feat, 'r') as fin:
                     fin_keys = fin.keys() #[i for i in fin.keys() if i not in r_list_h5]
                     for clip_id in tqdm(fin_keys):
-                        # if int(clip_id) == 26694:#26694 for broken feat
-                        #     continue
                         if clip_id in self.clip_set:
-                            if opt.frame == '':
-                                self.vid_feat[clip_id] = torch.Tensor(np.array(fin[clip_id]))
-                            # else:
-                            #     tt = torch.Tensor(np.array(fin[clip_id]))
-                            #     frame_num = 0
-                            #     if opt.frame == 'last':
-                            #         frame_num = len(tt)-1
-                            #     elif opt.frame == 'mid':
-                            #         frame_num = int(len(tt)/2)
-                            #     self.vid_feat[clip_id] = tt[frame_num].unsqueeze(0)
+                            self.vid_feat[clip_id] = torch.Tensor(np.array(fin[clip_id]))
                             
             if opt.c3d_feat and opt.visual_feat in ['c3d', 'both']:
                 with h5py.File(opt.c3d_feat, 'r') as fin:
                     fin_keys = fin.keys() #[i for i in fin.keys() if i not in r_list_h5]
                     for clip_id in tqdm(fin_keys):
-                        # if int(clip_id) == 26694:#26694 for broken feat
-                        #     continue
                         if clip_id in self.clip_set:
-                            if opt.frame == '':
-                                cur_feat = torch.Tensor(np.array(fin[clip_id]))
-                            # else:
-                            #     tt = torch.Tensor(np.array(fin[clip_id]))
-                            #     frame_num = 0
-                            #     if opt.frame == 'last':
-                            #         frame_num = len(tt)-1
-                            #     elif opt.frame == 'mid':
-                            #         frame_num = int(len(tt)/2)
-                            #     cur_feat = tt[frame_num].unsqueeze(0)
+                            cur_feat = torch.Tensor(np.array(fin[clip_id]))
                             self.vid_feat[clip_id] = self.concat_workaround(self.vid_feat[clip_id], cur_feat) if opt.cnn_feat and opt.visual_feat in ['cnn', 'both'] else cur_feat
             # assert len(self.vid_feat) == len(self.clip_info)
         if 'aud' in opt.input_streams:
@@ -144,10 +103,8 @@ class ViolinDataset(Dataset):
         print('loading description')
         for clip in tqdm(self.clip_info):
             clip['padded_statement'] = self.tokenize_and_pad(clean_str(clip['data-video-descrip']).lower())
-            # if 'sub' in self.input_streams:
             clip['padded_sub'] = self.tokenize_and_pad(clean_str(clip['data-video-sub']).lower())
-            # get statement
-            # clip['padded_statement'] = [[self.tokenize_and_pad(clean_str(pair[i]).lower()) for i in range(2)] for pair in clip['statement']]
+
             
     def concat_workaround(self, cnn, c3d): #a workaround for stupid a hero bug
         if cnn.shape[0]+1 == c3d.shape[0]:
@@ -223,17 +180,10 @@ class ViolinDataset(Dataset):
             l = []
             for i in obj_sort:
                 o.append(i['roi'])
-                # w = i['name'].lower()
-                # w = self.word2idx[w] if w in self.word2idx else self.word2idx["<unk>"]
-                # o.append(w)
                 l.append(i['box'])
             obj.append(o)
             loc.append(l)
         return obj, loc
-
-    # def get_state_pair(self, idx):
-    #     clip = self.clip_info[int(idx/3)]
-    #     return clip['statement'][idx%3]
 
 def pad_collate(batch):
     def pad_video_seq(vid_seq):
