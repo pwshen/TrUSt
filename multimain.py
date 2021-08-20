@@ -223,7 +223,7 @@ if __name__ == '__main__':
 
     cap_te = capte(opt)
     cap_enc = capenc(opt, cap_te)
-    cap_enc.load_state_dict(torch.load('/home/pwshen1214/TVTrope/results/results_2021_04_25_01_18_54_cap____trope_split4/cap_valid.pth'))
+    cap_enc.load_state_dict(torch.load('./data/capenc.pth'))
     cap_enc.to(opt.device)
     cap_enc.eval()
 
