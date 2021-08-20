@@ -7,9 +7,9 @@ def get_argparse():
     parser = argparse.ArgumentParser()
     parser.add_argument("--results_dir_base", type=str, default="results/results")
     parser.add_argument("--trope_file", type=str, default="trope_split1.json")
-    parser.add_argument("--feat_dir", type=str, default="/tmp2/r08922016/video_tropes/data/")
-    parser.add_argument("--bert_dir", type=str, default="/tmp2/r08922016/video_tropes/data/bert")
-    parser.add_argument("--vcpt_dir", type=str, default="/work/pwshen1214/tvtrope_vcpts/", help="visual concepts feature path")
+    parser.add_argument("--feat_dir", type=str, default="./data/")
+    parser.add_argument("--bert_dir", type=str, default="./data/bert")
+    parser.add_argument("--vcpt_dir", type=str, default="./data/tvtrope_vcpts/", help="visual concepts feature path")
     
     parser.add_argument("--model", type=str, default="ViolinBase", choices=['ViolinBase'])
     parser.add_argument("--data", type=str, default="ViolinDataset", choices=['ViolinDataset'])
@@ -61,7 +61,7 @@ def get_argparse():
     
     parser.add_argument("--disable_attn_fusion", action='store_true')
     parser.add_argument("--test", action='store_true')
-    parser.add_argument("--model_path", type=str, default="/tmp2/r08922016/video_tropes/violin-master/results/results_2020_11_17_02_38_24_ViolinBase_vid-resnet/best_valid.pth")
+    parser.add_argument("--model_path", type=str, default="")
     parser.add_argument("--frame", type=str, default="", choices=['first', 'last', 'mid', ''], help="testing with only one frame")
     
     parser.add_argument("--ori_resultdir", type=str, default="")
