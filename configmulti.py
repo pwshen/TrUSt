@@ -13,15 +13,11 @@ def get_argparse():
     
     parser.add_argument("--model", type=str, default="ViolinBase", choices=['ViolinBase'])
     parser.add_argument("--data", type=str, default="ViolinDataset", choices=['ViolinDataset'])
-    #parser.add_argument("--log_freq", type=int, default=10, help="print, save training info")
     parser.add_argument("--lr", type=float, default=5e-5, help="learning rate")
     parser.add_argument("--wd", type=float, default=5e-6, help="weight decay")
     parser.add_argument("--n_epoch", type=int, default=50, help="number of epochs to run")
     parser.add_argument("--losssm_w", type=float, default=10, help="number of epochs to run")
     parser.add_argument("--losscls_w", type=float, default=0.01, help="number of epochs to run")
-    #parser.add_argument("--grad_clip", type=float, default=0.01, help="gradient clip value")
-    #parser.add_argument("--init_train_epoch", type=int, default=15, help="number of epochs for initial train (without early stopping)")
-    #parser.add_argument("--max_es_cnt", type=int, default=200, help="number of epochs to early stop")
     parser.add_argument("--batch_size", type=int, default=128, help="mini-batch size")
     parser.add_argument("--test_batch_size", type=int, default=256, help="mini-batch size for testing")
     parser.add_argument("--device", type=int, default=0, help="gpu ordinal, -1 indicates cpu")
@@ -69,11 +65,9 @@ def get_argparse():
     opt = parser.parse_args()
     if opt.device >= 0:
         opt.device = torch.device('cuda:0')
-    #opt.results_dir = opt.results_dir_base + time.strftime("_%Y_%m_%d_%H_%M_%S")+'_'+opt.model
     opt.results_dir = "{}{}_{}_{}_{}_{}_{}".format(opt.results_dir_base, time.strftime("_%Y_%m_%d_%H_%M_%S"), '+'.join(opt.input_streams), opt.visual_feat, opt.audio_feat, '' if opt.disable_attn_fusion else "attn", opt.trope_file.split(".")[0])
     if opt.frame != '':
         opt.results_dir+='_frame-'+opt.frame
-    #opt.results_dir += '_'+'-'.join(opt.input_streams+[opt.visual_feat])
     if 'none' in opt.input_streams:
         assert len(opt.input_streams) == 1
         opt.input_streams = []
