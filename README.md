@@ -21,7 +21,7 @@ A multi-stream multi-task model, each stream process different contextual inputs
 ## Usage
 1. Clone our project
 2. Download data in our [website](https://www.cmlab.csie.ntu.edu.tw/project/trope/#data). Unzip and place them in the data directory
-3. Download pretraiend [description encoder weight](https://drive.google.com/file/d/1sz2qqjOsehCSIz6u8lMBqHmRpdNW7TTk/view?usp=sharing) and [Bert](https://drive.google.com/file/d/1qUEph2BtVSpHC-prqRtrvMU212g0qQyP/view?usp=sharing). Place them in data directory and unzip bert.zip
+3. Download pretrained [description encoder weight](https://drive.google.com/file/d/1sz2qqjOsehCSIz6u8lMBqHmRpdNW7TTk/view?usp=sharing) and [Bert](https://drive.google.com/file/d/1qUEph2BtVSpHC-prqRtrvMU212g0qQyP/view?usp=sharing). Place them in data directory and unzip bert.zip
 4. Generate experiment files  
    Run generate_sh.py  
    ``` python generate_sh.py ```
