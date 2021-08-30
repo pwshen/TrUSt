@@ -30,6 +30,12 @@ A multi-stream multi-task model, each stream process different contextual inputs
 5. Training  
    ``` sh {experiment file want to run} ```
 ## Citation
+   ``` @inproceedings{su2021truman,
+      title={TrUMAn: Trope Understanding in Movies and Animations}, 
+      author={Hung-Ting Su and Po-Wei Shen and Bing-Chen Tsai and Wen-Feng Cheng and Ke-Jyun Wang and Winston H. Hsu},
+      year={2021},
+      book={CIKM},
+      } ```
 
 ## Aclnowledgement
 Some code are borrow from [Violin](https://github.com/jimmy646/violin) and [L-GCN](https://github.com/SunDoge/L-GCN)
