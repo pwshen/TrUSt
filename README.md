@@ -32,4 +32,4 @@ A multi-stream multi-task model, each stream process different contextual inputs
 ## Citation
 
 ## Aclnowledgement
-Some code are borrow from [TVQA](https://github.com/jayleicn/TVQA), [Violin](https://github.com/jimmy646/violin) and [L-GCN](https://github.com/SunDoge/L-GCN)
+Some code are borrow from [Violin](https://github.com/jimmy646/violin) and [L-GCN](https://github.com/SunDoge/L-GCN)
